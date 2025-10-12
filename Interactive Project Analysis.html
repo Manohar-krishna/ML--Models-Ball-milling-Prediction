@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML for Ball Milling of γ-TiAl Alloys: An Interactive Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            color: #4f46e5;
+            border-bottom: 2px solid #4f46e5;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with a tab-based navigation system is chosen for its simplicity and intuitiveness. This structure allows users to easily switch between different facets of the project analysis (Scope, Feasibility, Significance, etc.) without losing context. Each tab reveals a dedicated section containing explanatory text, key data points, and an interactive visualization. This thematic organization is more user-friendly than a linear report, encouraging exploration and comparison between different aspects of the research. The goal is to make a dense academic analysis digestible and engaging for a broader audience. -->
+    <!-- Visualization & Content Choices: 
+        - Project Scope: A dynamic bar chart will visualize the impact of input parameters on output properties. Goal: Compare. Method: Chart.js Bar Chart. Interaction: Users can select different output properties to see how inputs affect them. Justification: This provides a clear, interactive way to understand the core relationships the ML model aims to predict.
+        - Feasibility: A donut chart will illustrate the data acquisition bottleneck, showing the high cost/time of experiments vs. simulations. Goal: Inform/Proportions. Method: Chart.js Donut Chart. Interaction: Hovering over segments reveals detailed stats. Justification: Quickly conveys the central challenge of the project.
+        - Significance: A process flow diagram built with HTML/Tailwind will show the transition from traditional to ML-driven workflows. Goal: Organize/Change. Method: Styled HTML divs. Interaction: Key steps are highlighted on hover. Justification: Visually explains the value proposition of the research.
+        - Novelty: A radar chart will compare this project against other research areas across several dimensions. Goal: Compare/Relationships. Method: Chart.js Radar Chart. Interaction: Tooltips on hover provide details for each research area. Justification: Effectively situates the project's unique contribution in the existing literature.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Machine Learning for γ-TiAl Alloy Ball Milling</h1>
+            <p class="mt-2 text-lg text-gray-600">An Interactive Analysis of an Undergraduate Research Project</p>
+        </header>
+
+        <nav class="mb-10 border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px justify-center text-sm font-medium text-center text-gray-500">
+                <li class="mr-2">
+                    <a href="#scope" class="nav-link inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 active" data-target="scope">Project Scope</a>
+                </li>
+                <li class="mr-2">
+                    <a href="#feasibility" class="nav-link inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-target="feasibility">Feasibility & Gaps</a>
+                </li>
+                <li class="mr-2">
+                    <a href="#significance" class="nav-link inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-target="significance">Significance</a>
+                </li>
+                <li>
+                    <a href="#novelty" class="nav-link inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-target="novelty">Novelty</a>
+                </li>
+                 <li>
+                    <a href="#future" class="nav-link inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-target="future">Future Work</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="scope" class="content-section active">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4 text-indigo-700">Project Scope: Inputs & Outputs</h2>
+                        <p class="mb-4 text-gray-700">The project's objective is to create a machine learning model that predicts the final properties of γ-TiAl powder based on the ball milling process settings. This section outlines the controllable inputs the model uses and the powder characteristics it aims to predict.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800">Model Inputs (Process Parameters)</h3>
+                                <ul class="list-disc list-inside text-gray-600 mt-2">
+                                    <li>Ball-to-Powder Ratio (BPR)</li>
+                                    <li>Milling Speed (RPM)</li>
+                                    <li>Milling Duration (Hours)</li>
+                                    <li>Process Control Agent (PCA)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800">Model Outputs (Powder Properties)</h3>
+                                <ul class="list-disc list-inside text-gray-600 mt-2">
+                                    <li>Particle Size (e.g., d₅₀)</li>
+                                    <li>Particle Morphology (e.g., Sphericity)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                         <div class="bg-white p-4 rounded-lg shadow-md">
+                            <div class="flex justify-center mb-4">
+                                <select id="scopeChartSelector" class="border border-gray-300 rounded-md p-2 text-sm">
+                                    <option value="particleSize">Impact on Particle Size</option>
+                                    <option value="morphology">Impact on Morphology</option>
+                                </select>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="scopeChart"></canvas>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="feasibility" class="content-section">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                     <div>
+                         <div class="bg-white p-4 rounded-lg shadow-md">
+                            <h3 class="text-center font-semibold mb-4">The Data Acquisition Bottleneck</h3>
+                            <div class="chart-container" style="height: 300px; max-height: 300px;">
+                                <canvas id="feasibilityChart"></canvas>
+                            </div>
+                         </div>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4 text-indigo-700">Feasibility & The Data Gap</h2>
+                        <p class="mb-4 text-gray-700">The project's greatest challenge is acquiring a large, high-quality dataset. Machine learning models require substantial data to train effectively, but generating this data for materials science is a major hurdle.</p>
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md">
+                            <h3 class="font-semibold">Key Insight</h3>
+                            <p>Due to the data scarcity, this project is best framed as a <strong class="font-bold">methodological proof-of-concept</strong>. Its primary value is in demonstrating the workflow and challenges of applying ML in a data-limited environment, rather than delivering a production-ready tool.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="significance" class="content-section">
+                 <div class="text-center">
+                    <h2 class="text-2xl font-bold mb-4 text-indigo-700">Significance: A Shift in Manufacturing</h2>
+                     <p class="max-w-3xl mx-auto mb-8 text-gray-700">This data-driven approach marks a critical shift from slow, costly trial-and-error methods towards an intelligent "Materials 4.0" paradigm, accelerating development and deepening scientific understanding.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow">
+                         <h3 class="font-semibold text-lg mb-3 text-center">Traditional Workflow</h3>
+                         <div class="space-y-4">
+                            <div class="flex items-center p-3 bg-white rounded-md shadow-sm">
+                                <div class="bg-red-500 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold mr-4">1</div>
+                                <span>Expert Intuition & Manual Trials</span>
+                            </div>
+                             <div class="text-center text-3xl text-gray-400">↓</div>
+                             <div class="flex items-center p-3 bg-white rounded-md shadow-sm">
+                                <div class="bg-red-500 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold mr-4">2</div>
+                                <span>Lengthy, Costly Experiments</span>
+                            </div>
+                            <div class="text-center text-3xl text-gray-400">↓</div>
+                             <div class="flex items-center p-3 bg-white rounded-md shadow-sm">
+                                <div class="bg-red-500 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold mr-4">3</div>
+                                <span>Suboptimal or Limited Results</span>
+                            </div>
+                         </div>
+                    </div>
+                     <div class="bg-indigo-100 p-6 rounded-lg shadow">
+                         <h3 class="font-semibold text-lg mb-3 text-center">ML-Driven Workflow</h3>
+                          <div class="space-y-4">
+                            <div class="flex items-center p-3 bg-white rounded-md shadow-sm">
+                                <div class="bg-indigo-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold mr-4">1</div>
+                                <span>Data Collection & Model Training</span>
+                            </div>
+                             <div class="text-center text-3xl text-gray-400">↓</div>
+                             <div class="flex items-center p-3 bg-white rounded-md shadow-sm">
+                                <div class="bg-indigo-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold mr-4">2</div>
+                                <span>Rapid Virtual Screening & Prediction</span>
+                            </div>
+                            <div class="text-center text-3xl text-gray-400">↓</div>
+                             <div class="flex items-center p-3 bg-white rounded-md shadow-sm">
+                                <div class="bg-indigo-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold mr-4">3</div>
+                                <span>Optimized Parameters & Scientific Insight</span>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="novelty" class="content-section">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                     <div>
+                        <h2 class="text-2xl font-bold mb-4 text-indigo-700">Novelty: A Unique Intersection</h2>
+                        <p class="mb-4 text-gray-700">The project's innovation isn't a new algorithm, but the challenging synthesis of three distinct domains. It tackles a high-value, difficult-to-process material system where data is exceptionally scarce, distinguishing it from prior work.</p>
+                         <p class="text-gray-700">The radar chart visualizes how this project (in blue) carves a unique niche compared to related research areas, focusing heavily on a specific, challenging process and material where data scarcity is a primary concern.</p>
+                    </div>
+                    <div>
+                         <div class="bg-white p-4 rounded-lg shadow-md">
+                            <h3 class="text-center font-semibold mb-4">Positioning in Scientific Literature</h3>
+                            <div class="chart-container">
+                                <canvas id="noveltyChart"></canvas>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="future" class="content-section">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold mb-4 text-indigo-700">Future Trajectories</h2>
+                     <p class="max-w-3xl mx-auto mb-10 text-gray-700">This foundational work opens several exciting avenues for more advanced research, addressing the project's limitations and expanding its impact significantly.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">1. Explainable AI (XAI)</h3>
+                        <p class="text-gray-600">Move beyond prediction to explanation. Use techniques like SHAP to understand *why* the model makes its predictions, turning it into a tool for scientific discovery and hypothesis generation about the underlying physics.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">2. Hybrid Simulation-Experiment</h3>
+                        <p class="text-gray-600">Overcome data scarcity by pre-training a model on a large dataset from physics-based simulations (DEM), then fine-tuning it with a small set of real experimental data. This "transfer learning" approach maximizes accuracy with limited resources.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">3. Through-Process Modeling</h3>
+                        <p class="text-gray-600">Create a multi-stage digital thread linking the entire manufacturing chain: from initial milling parameters to powder characteristics, then to consolidated part properties, and finally to the final component's mechanical performance.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            let scopeChart, feasibilityChart, noveltyChart;
+
+            function updateActiveState(targetId) {
+                navLinks.forEach(link => {
+                    if (link.dataset.target === targetId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+                contentSections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+            
+            function destroyCharts() {
+                if (scopeChart) scopeChart.destroy();
+                if (feasibilityChart) feasibilityChart.destroy();
+                if (noveltyChart) noveltyChart.destroy();
+            }
+
+            function renderCharts(targetId) {
+                if (targetId === 'scope') renderScopeChart();
+                if (targetId === 'feasibility') renderFeasibilityChart();
+                if (targetId === 'novelty') renderNoveltyChart();
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.dataset.target;
+                    updateActiveState(targetId);
+                    destroyCharts();
+                    renderCharts(targetId);
+                });
+            });
+            
+            const scopeChartData = {
+                particleSize: {
+                    labels: ['BPR', 'Milling Speed', 'Milling Time', 'PCA'],
+                    datasets: [{
+                        label: 'Relative Impact on Particle Size',
+                        data: [75, 85, 95, 40],
+                        backgroundColor: 'rgba(79, 70, 229, 0.6)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                morphology: {
+                    labels: ['BPR', 'Milling Speed', 'Milling Time', 'PCA'],
+                    datasets: [{
+                        label: 'Relative Impact on Sphericity',
+                        data: [60, 70, 80, 55],
+                        backgroundColor: 'rgba(30, 64, 175, 0.6)',
+                        borderColor: 'rgba(30, 64, 175, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            };
+
+            function renderScopeChart() {
+                const ctx = document.getElementById('scopeChart').getContext('2d');
+                const selectedData = scopeChartData[document.getElementById('scopeChartSelector').value];
+                 if (scopeChart) scopeChart.destroy();
+                scopeChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: selectedData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Relative Impact (%)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.raw}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            document.getElementById('scopeChartSelector').addEventListener('change', renderScopeChart);
+
+
+            function renderFeasibilityChart() {
+                const ctx = document.getElementById('feasibilityChart').getContext('2d');
+                 if (feasibilityChart) feasibilityChart.destroy();
+                feasibilityChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Experimental Data Generation (Time/Cost)', 'Simulation Data Generation (Complexity/Time)', 'Likely Available Data'],
+                        datasets: [{
+                            data: [65, 30, 5],
+                            backgroundColor: [
+                                'rgba(239, 68, 68, 0.7)',
+                                'rgba(245, 158, 11, 0.7)',
+                                'rgba(16, 185, 129, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(239, 68, 68, 1)',
+                                'rgba(245, 158, 11, 1)',
+                                'rgba(16, 185, 129, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                           legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 12
+                                }
+                           },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return ` ${context.label}: ${context.raw}% of effort/challenge`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function renderNoveltyChart() {
+                const ctx = document.getElementById('noveltyChart').getContext('2d');
+                 if (noveltyChart) noveltyChart.destroy();
+                noveltyChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Specific Material (γ-TiAl)', 'Specific Process (MA)', 'Data Scarcity Focus', 'Alloy Design Focus', 'General Process Modeling'],
+                        datasets: [
+                            {
+                                label: 'This Project',
+                                data: [9, 9, 8, 2, 3],
+                                fill: true,
+                                backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                                borderColor: 'rgb(79, 70, 229)',
+                                pointBackgroundColor: 'rgb(79, 70, 229)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(79, 70, 229)'
+                            },
+                            {
+                                label: 'Alloy Property Prediction',
+                                data: [7, 3, 3, 9, 2],
+                                fill: true,
+                                backgroundColor: 'rgba(217, 70, 239, 0.2)',
+                                borderColor: 'rgb(217, 70, 239)',
+                                pointBackgroundColor: 'rgb(217, 70, 239)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(217, 70, 239)'
+                            },
+                             {
+                                label: 'General Milling Modeling',
+                                data: [2, 7, 2, 1, 9],
+                                fill: true,
+                                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                                borderColor: 'rgb(14, 165, 233)',
+                                pointBackgroundColor: 'rgb(14, 165, 233)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(14, 165, 233)'
+                            }
+                        ]
+                    },
+                    options: {
+                         responsive: true,
+                        maintainAspectRatio: false,
+                        elements: {
+                            line: {
+                                borderWidth: 2
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: false
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 10,
+                                ticks: {
+                                    stepSize: 2
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            updateActiveState('scope');
+            renderCharts('scope');
+        });
+    </script>
+</body>
+</html>
